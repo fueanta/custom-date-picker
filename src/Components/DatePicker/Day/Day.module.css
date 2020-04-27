@@ -1,0 +1,10 @@
+.Day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #313131;
+}
+
+.Day.Selected {
+  background-color: #00ca85;
+}
