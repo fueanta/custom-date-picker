@@ -1,16 +1,16 @@
-const date_picker_element = document.querySelector(".date-picker");
+const date_picker_element = document.querySelector(".custom-date-picker");
 const selected_date_element = document.querySelector(
-    ".date-picker .selected-date"
+    ".custom-date-picker .selected-date"
 );
-const dates_element = document.querySelector(".date-picker .dates");
-const mth_element = document.querySelector(".date-picker .dates .month .mth");
+const dates_element = document.querySelector(".custom-date-picker .dates");
+const mth_element = document.querySelector(".custom-date-picker .dates .month .mth");
 const next_mth_element = document.querySelector(
-    ".date-picker .dates .month .next-mth"
+    ".custom-date-picker .dates .month .next-mth"
 );
 const prev_mth_element = document.querySelector(
-    ".date-picker .dates .month .prev-mth"
+    ".custom-date-picker .dates .month .prev-mth"
 );
-const days_element = document.querySelector(".date-picker .dates .days");
+const days_element = document.querySelector(".custom-date-picker .dates .days");
 const months = [
     "January",
     "February",
@@ -25,6 +25,7 @@ const months = [
     "November",
     "December",
 ];
+const dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 let date = new Date();
@@ -51,7 +52,10 @@ prev_mth_element.addEventListener("click", goToPrevMonth);
 
 // FUNCTIONS
 function toggleDatePicker(e) {
-    if (!checkEventPathForClass(e.path, "dates")) {
+    if (
+        checkEventPathForClass(e.path, "selected-date") ||
+        checkEventPathForClass(e.path, "day")
+    ) {
         dates_element.classList.toggle("active");
     }
 }
@@ -78,8 +82,22 @@ function goToPrevMonth(e) {
 
 function populateDates(e) {
     days_element.innerHTML = "";
-    let amount_days = daysInMonth[month];
 
+    for (let i = 0; i < dayNames.length; i++) {
+        const day_name_element = document.createElement("div");
+        day_name_element.classList.add("day-name");
+        day_name_element.textContent = dayNames[i];
+        days_element.appendChild(day_name_element);
+    }
+
+    const startPoint = new Date(year, month, 1).getDay();
+    for (let i = 0; i < startPoint; i++) {
+        const blank_element = document.createElement("div");
+        blank_element.classList.add("blank");
+        days_element.appendChild(blank_element);
+    }
+
+    let amount_days = daysInMonth[month];
     if (isLeapYear(year) && month === 1) {
         amount_days = 29;
     }
