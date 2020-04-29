@@ -3,7 +3,9 @@ const selected_date_element = document.querySelector(
     ".custom-date-picker .selected-date"
 );
 const dates_element = document.querySelector(".custom-date-picker .dates");
-const mth_element = document.querySelector(".custom-date-picker .dates .month .mth");
+const mth_element = document.querySelector(
+    ".custom-date-picker .dates .month .mth"
+);
 const next_mth_element = document.querySelector(
     ".custom-date-picker .dates .month .next-mth"
 );
@@ -46,15 +48,25 @@ selected_date_element.dataset.value = selectedDate;
 populateDates();
 
 // EVENT LISTENERS
+document.addEventListener("click", toggleActiveDatePicker);
 date_picker_element.addEventListener("click", toggleDatePicker);
 next_mth_element.addEventListener("click", goToNextMonth);
 prev_mth_element.addEventListener("click", goToPrevMonth);
 
 // FUNCTIONS
+function toggleActiveDatePicker(e) {
+    if (!checkEventPathForClass(e.path, "custom-date-picker")) {
+        document
+            .querySelector(".custom-date-picker .dates")
+            .classList.remove("active");
+    }
+}
+
 function toggleDatePicker(e) {
     if (
-        checkEventPathForClass(e.path, "selected-date") ||
-        checkEventPathForClass(e.path, "day")
+        checkEventPathForClass(e.path, "custom-date-picker") &&
+        (checkEventPathForClass(e.path, "selected-date") ||
+            checkEventPathForClass(e.path, "day"))
     ) {
         dates_element.classList.toggle("active");
     }
