@@ -55,7 +55,7 @@ prev_mth_element.addEventListener("click", goToPrevMonth);
 
 // FUNCTIONS
 function toggleActiveDatePicker(e) {
-    if (!checkEventPathForClass(e.path, "custom-date-picker")) {
+    if (!checkEventPathForClass(e.composedPath(), "custom-date-picker")) {
         document
             .querySelector(".custom-date-picker .dates")
             .classList.remove("active");
@@ -64,9 +64,9 @@ function toggleActiveDatePicker(e) {
 
 function toggleDatePicker(e) {
     if (
-        checkEventPathForClass(e.path, "custom-date-picker") &&
-        (checkEventPathForClass(e.path, "selected-date") ||
-            checkEventPathForClass(e.path, "day"))
+        checkEventPathForClass(e.composedPath(), "custom-date-picker") &&
+        (checkEventPathForClass(e.composedPath(), "selected-date") ||
+            checkEventPathForClass(e.composedPath(), "day"))
     ) {
         dates_element.classList.toggle("active");
     }
